@@ -1,4 +1,5 @@
-﻿using Repository.Context;
+﻿using Model;
+using Repository.Context;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -15,9 +16,53 @@ namespace Repository
         {
             _dbContext = dbContext;
         }
+
+        public async Task<Model.Task> CreateTask(string name)
+        {
+            Model.Task createdTask = _dbContext.Tasks.Add(
+                new Model.Task()
+                {
+                    Name = name
+                }
+            );
+            await _dbContext.SaveChangesAsync();
+            return createdTask;
+        }
+
         public Task<List<Model.Task>> GetTasks()
         {
             return _dbContext.Tasks.ToListAsync();
         }
+      
+        public async Task<Model.Task> UpdateTask(Model.Task task)
+        {
+            Model.Task existingTask = await _dbContext.Tasks.Where(t => t.Id == task.Id).SingleOrDefaultAsync();
+            if (existingTask != null)
+            {
+                existingTask.Name = task.Name;
+                await _dbContext.SaveChangesAsync();
+                return existingTask;
+            }
+            else
+            {
+                throw new Exception($"Task with id {task.Id} was not found and therefore could not be updated");
+            }
+        }
+        public async Task<Model.Task> DeleteTask(Guid taskId)
+        {
+            Model.Task existingTask = await _dbContext.Tasks.Where(t => t.Id == taskId).SingleOrDefaultAsync();
+            if (existingTask != null)
+            {
+                Model.Task deletedTask = _dbContext.Tasks.Remove(existingTask);
+                await _dbContext.SaveChangesAsync();
+                return deletedTask;
+            }
+            else
+            {
+                throw new Exception($"Task with id {taskId} was not found and therefore could not be deleted");
+            }
+        }
+
+    
     }
 }

@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Services;
+using System.Xml.Linq;
 
 namespace TaskManager.Controllers
 {
@@ -15,37 +16,64 @@ namespace TaskManager.Controllers
         public TaskController(ILogger<TaskController> logger, ITaskService taskService)
         {
             _logger = logger;
-            _taskService = taskService; 
+            _taskService = taskService;
         }
 
         [HttpGet]
         [AllowAnonymous]
         public async Task<ActionResult<List<Model.Task>>> GetTasks()
         {
-            return BadRequest(await _taskService.GetTasks());
+            try
+            {
+                return Ok(await _taskService.GetTasks());
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
         }
-    
+
         [HttpPut]
         [AllowAnonymous]
-        public async Task<IActionResult> CreateTask(Model.Task task)
+        public async Task<IActionResult> CreateTask(string name)
         {
-            return BadRequest(await _taskService.CreateTask(task));
+            try
+            {
+                return Ok(await _taskService.CreateTask(name));
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
         }
 
         [HttpPut]
         [AllowAnonymous]
         public async Task<IActionResult> UpdateTask(Model.Task task)
         {
-            return BadRequest(await _taskService.UpdateTask(task));
+            try
+            {
+                return Ok(await _taskService.UpdateTask(task));
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
 
         }
 
         [HttpDelete]
         [AllowAnonymous]
-        public async Task<IActionResult> DeleteTask(Model.Task task)
+        public async Task<IActionResult> DeleteTask(Guid taskId)
         {
-            return BadRequest(await _taskService.DeleteTask(task));
-
+            try
+            {
+                return Ok(await _taskService.DeleteTask(taskId));
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
         }
     }
 }
