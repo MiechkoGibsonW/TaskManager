@@ -11,8 +11,9 @@
                 "dbo.Tasks",
                 c => new
                     {
-                        Id = c.Guid(nullable: false),
+                        Id = c.Guid(nullable: false, identity: true),
                         Name = c.String(),
+                        IsCompleted = c.Boolean(nullable: false),
                     })
                 .PrimaryKey(t => t.Id);
             

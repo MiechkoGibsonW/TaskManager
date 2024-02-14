@@ -53,25 +53,19 @@ namespace Services
         }
 
         /// <summary>
-        /// Updates a task then returns the updated task
-        /// Throws an argumentNullException if the Task, Id or Name are null or empty
+        /// Changes the status of a task to "completed" then returns the task
+        /// Throws ArgumentNullException if the taskId is null or empty
         /// </summary>
-        public Task<Model.Task> UpdateTask(Model.Task task)
+        public Task<Model.Task> CompleteTask(Guid taskId)
         {
-            if (task == null)
-            {
-                throw new ArgumentNullException("task cannot be null or empty");
-            }
-            if (task.Id == Guid.Empty)
+           
+            if (taskId == Guid.Empty)
             {
                 throw new ArgumentNullException("taskId cannot be empty");
             }
-            if (task.Name == string.Empty)
-            {
-                throw new ArgumentNullException("name cannot be empty");
-            }
+           
 
-            return _repository.UpdateTask(task);
+            return _repository.CompleteTask(taskId);
         }
     }
 }

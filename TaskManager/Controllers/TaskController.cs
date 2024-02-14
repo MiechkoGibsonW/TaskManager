@@ -49,11 +49,11 @@ namespace TaskManager.Controllers
 
         [HttpPut]
         [AllowAnonymous]
-        public async Task<IActionResult> UpdateTask(Model.Task task)
+        public async Task<IActionResult> CompleteTask(Guid taskId)
         {
             try
             {
-                return Ok(await _taskService.UpdateTask(task));
+                return Ok(await _taskService.CompleteTask(taskId));
             }
             catch (Exception e)
             {

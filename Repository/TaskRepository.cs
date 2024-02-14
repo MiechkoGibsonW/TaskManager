@@ -22,7 +22,8 @@ namespace Repository
             Model.Task createdTask = _dbContext.Tasks.Add(
                 new Model.Task()
                 {
-                    Name = name
+                    Name = name,
+                    IsCompleted = false
                 }
             );
             await _dbContext.SaveChangesAsync();
@@ -34,18 +35,18 @@ namespace Repository
             return _dbContext.Tasks.ToListAsync();
         }
       
-        public async Task<Model.Task> UpdateTask(Model.Task task)
+        public async Task<Model.Task> CompleteTask(Guid taskId)
         {
-            Model.Task existingTask = await _dbContext.Tasks.Where(t => t.Id == task.Id).SingleOrDefaultAsync();
+            Model.Task existingTask = await _dbContext.Tasks.Where(t => t.Id == taskId).SingleOrDefaultAsync();
             if (existingTask != null)
             {
-                existingTask.Name = task.Name;
+                existingTask.IsCompleted = true;
                 await _dbContext.SaveChangesAsync();
                 return existingTask;
             }
             else
             {
-                throw new Exception($"Task with id {task.Id} was not found and therefore could not be updated");
+                throw new Exception($"Task with id {taskId} was not found and therefore could not be updated");
             }
         }
         public async Task<Model.Task> DeleteTask(Guid taskId)

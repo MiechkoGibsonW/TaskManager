@@ -11,6 +11,6 @@ namespace Services
         Task<List<Model.Task>> GetTasks();
         Task<Model.Task> CreateTask(string name);
         Task<Model.Task> DeleteTask(Guid taskId);
-        Task<Model.Task> UpdateTask(Model.Task task);
+        Task<Model.Task> CompleteTask(Guid taskId);
     }
 }
