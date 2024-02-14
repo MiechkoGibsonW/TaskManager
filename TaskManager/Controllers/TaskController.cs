@@ -8,7 +8,7 @@ namespace TaskManager.Controllers
 {
 
     [ApiController]
-    [Route("api/[controller]/[action]")]
+    [Route("[controller]/[action]")]
     public class TaskController : ControllerBase
     {
         private readonly ILogger<TaskController> _logger;
