@@ -8,7 +8,7 @@ namespace Services
 {
     public interface ITaskService
     {
-        Task<IEnumerable<Model.Task>> GetTasks();
+        Task<List<Model.Task>> GetTasks();
         Task<Model.Task> CreateTask(Model.Task task);
         Task<Model.Task> DeleteTask(Model.Task task);
         Task<Model.Task> UpdateTask(Model.Task task);

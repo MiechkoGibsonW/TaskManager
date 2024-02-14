@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Repository;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,6 +9,12 @@ namespace Services
 {
     public class TaskService : ITaskService
     {
+        ITaskRepository _repository;
+
+        public TaskService(ITaskRepository repository)
+        {
+            _repository = repository;
+        }
         public Task<Model.Task> CreateTask(Model.Task task)
         {
             throw new NotImplementedException();
@@ -18,9 +25,9 @@ namespace Services
             throw new NotImplementedException();
         }
 
-        public Task<IEnumerable<Model.Task>> GetTasks()
+        public Task<List<Model.Task>> GetTasks()
         {
-            throw new NotImplementedException();
+            return  _repository.GetTasks();
         }
 
         public Task<Model.Task> UpdateTask(Model.Task task)

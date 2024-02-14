@@ -20,7 +20,7 @@ namespace TaskManager.Controllers
 
         [HttpGet]
         [AllowAnonymous]
-        public async Task<ActionResult<IEnumerable<Model.Task>>> GetTasks()
+        public async Task<ActionResult<List<Model.Task>>> GetTasks()
         {
             return BadRequest(await _taskService.GetTasks());
         }
